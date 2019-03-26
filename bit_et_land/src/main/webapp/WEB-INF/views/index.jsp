@@ -125,6 +125,7 @@
  <script src="<%=application.getContextPath()%>/resources/js/app.js"></script>
  <script src="<%=application.getContextPath()%>/resources/js/component/compo.js"></script>
  <script src="<%=application.getContextPath()%>/resources/js/customer/cust.js"></script>
+ <script src="<%=application.getContextPath()%>/resources/js/common/auth.js"></script>
  <script src="<%=application.getContextPath()%>/resources/js/employee/emp.js"></script>
 <script>
 app.init('<%=application.getContextPath()%>');

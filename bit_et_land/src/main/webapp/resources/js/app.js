@@ -7,13 +7,13 @@ app = (()=>{
 		setContentView();
 	};
 	let setContentView = ()=>{
-		alert('js:'+sessionStorage.getItem('js'));
 		$.when(
 				$.getScript($.js()+'/component/compo.js'),
 				$.getScript($.js()+'/customer/cust.js'),
+				$.getScript($.js()+'/common/auth.js'),
 				$.getScript($.js()+'/employee/emp.js')
 		).done(()=>{
-			cust.permission.login();
+			auth.permission.login();
 		}
 		);
 };
