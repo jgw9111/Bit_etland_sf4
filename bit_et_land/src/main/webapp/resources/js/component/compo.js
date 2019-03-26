@@ -12,7 +12,7 @@ compo = {
 			+'    <label for="psw"><b>Password</b></label>'
 			+'    <input type="password" placeholder="Enter Password" name="psw" required> </br>'	  
 			+'    <button type="submit">Login</button></br>'
-			+'    <label> </br>'
+			+'    <label> '
 			+'      <input type="checkbox" checked="checked" name="remember"> Remember me'
 			+'    </label>'
 			+'  </div>'
@@ -44,12 +44,12 @@ compo = {
 			+'  </div>'
 			+'</form>';
 		},
-		nav :()=>{
+		/*nav :()=>{
 			$('#nav').children().eq(0).html('<a href="#" id="login">Login</a>');
 			$('#nav').children().eq(1).html('<a href="#" id="Join">Join</a>');
 			$('#nav').children().eq(2).html('<a href="#" id="emp_regist">emp_Register</a>');
 			$('#nav').children().eq(3).html('<a href="#" id="emp_access">emp_Access</a>');
-		},
+		},*/
 		cust_join_form :()=>{
 			return 
 			'<form action="/action_page.php" style="border:1px solid #ccc">'
