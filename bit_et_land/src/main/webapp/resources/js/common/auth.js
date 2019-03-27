@@ -73,6 +73,7 @@ auth = (()=>{
 				success: d=>{
 					if(d.customerID!==''){
 						alert('로그인 성공 '+d.customerID);
+						$(r_cnt).html(compo.cust_my_page());
 					}else{
 						alert('로그인 실패');
 					};
