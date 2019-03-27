@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bit_trade.web.mapper.CustomerMapper">
-	  	<select id="selectCustomer" resultType="com.bit_trade.web.cust.Customer">
+<mapper namespace="com.bit_et_land.web.cust.CustomerMapper">
+	  	<select id="selectCustomer" resultType="com.bit_et_land.web.cust.Customer">
 	 		   SELECT 
 			  	CUSTOMER_ID customerID,
 	        	CUSTOMER_NAME customerName,
@@ -14,14 +14,20 @@
 	        	CITY,
 	        	ADDRESS,
 	        	POSTAL_CODE postalCode
-			   FROM CUSTOMERS 
-	 		   WHERE CUSTOMER_ID LIKE #{customerID}
-	 		   AND PASSWORD LIKE #{password}
+			   FROM CUSTOMERS
+			   <where>
+			   		<if test="attr=='customerID'">
+			 		   WHERE CUSTOMER_ID LIKE #{customerID}
+			   		</if>
+			   		<if test="attr=='password'">
+			 		   AND PASSWORD LIKE #{password}
+			   		</if>
+			   </where> 
 	 	 </select>
 	 	 
  	   <insert 
 	 	 	id="insertCustomer"
-	 	 	parameterType="com.bit_trade.web.domain.CustomerDTO"
+	 	 	parameterType="com.bit_et_land.web.cust.Customer"
 			flushCache="true"
 			statementType="PREPARED"
 			timeout="20">
@@ -48,7 +54,7 @@
 		  
 		 <update
 			  id="updateCustomer"
-			  parameterType="com.bit_trade.web.domain.CustomerDTO"
+			  parameterType="com.bit_et_land.web.cust.Customer"
 			  flushCache="true"
 			  statementType="PREPARED"
 			  timeout="20">
@@ -63,7 +69,7 @@
 		
 		  <delete
 			  id="deleteCustomer"
-			  parameterType="com.bit_trade.web.domain.CustomerDTO"
+			  parameterType="com.bit_et_land.web.cust.Customer"
 			  flushCache="true"
 			  statementType="PREPARED"
 			  timeout="20">
