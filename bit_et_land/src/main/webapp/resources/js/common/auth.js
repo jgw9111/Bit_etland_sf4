@@ -13,12 +13,13 @@ auth = (()=>{
 		setContentView();
 	};
 	let setContentView=()=>{
-		$.getScript(compojs)
-		.done(()=>{
+		$.getScript(compojs, ()=>{
 			// 로그인 폼 디폴트
-			$(r_cnt).empty();
-			$(compo.cust_login_form()).appendTo(r_cnt);
-			login(); 
+			$(r_cnt).html(compo.cust_login_form());
+			$('form button[type=submit]').click(e=>{
+				e.preventDefault(); // 디폴트인 html 막는 것
+				login(); //클릭이벤트 처리
+			});
 			// 네비게이션
 			$(l_cnt+' ul.nav').empty();
 			let arr =[{name:'login',val:'Login'},
@@ -35,7 +36,10 @@ auth = (()=>{
 					case 'login':
 						$(r_cnt).empty();
 						$(compo.cust_login_form()).appendTo(r_cnt);
-						login(); //클릭이벤트 처리
+						$('form button[type=submit]').click(e=>{
+							e.preventDefault();
+							login(); //클릭이벤트 처리
+						});
 						/*$('form button[type=submit]').click(()=>{
 							alert('로그인 버튼 클릭');
 						});*/
@@ -61,7 +65,7 @@ auth = (()=>{
 		});
 	};
 	let login =()=>{
-		$('form button[type=submit]').click(()=>{
+		
 			let data = {customerID:$('form input[name=uname]').val(),
 					password:$('form input[name=psw]').val()};
 			$.ajax({
@@ -82,9 +86,8 @@ auth = (()=>{
 					alert('error');
 				}
 			});
-		});
 	};
-	
+
 	let join =()=>{};
 	let mypage =()=>{};
 	return {
