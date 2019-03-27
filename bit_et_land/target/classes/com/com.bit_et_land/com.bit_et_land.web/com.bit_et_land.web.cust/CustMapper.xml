@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit_trade.web.mapper.CustomerMapper">
+	  	<select id="selectCustomer" resultType="com.bit_trade.web.cust.Customer">
+	 		   SELECT 
+			  	CUSTOMER_ID customerID,
+	        	CUSTOMER_NAME customerName,
+	        	PASSWORD,
+	        	SSN,
+	        	PHOTO,
+	        	PHOEN_NUMBER phone,
+	        	CITY,
+	        	ADDRESS,
+	        	POSTAL_CODE postalCode
+			   FROM CUSTOMERS 
+	 		   WHERE CUSTOMER_ID LIKE #{customerID}
+	 		   AND PASSWORD LIKE #{password}
+	 	 </select>
+	 	 
+ 	   <insert 
+	 	 	id="insertCustomer"
+	 	 	parameterType="com.bit_trade.web.domain.CustomerDTO"
+			flushCache="true"
+			statementType="PREPARED"
+			timeout="20">
+		        INSERT INTO CUSTOMERS (CUSTOMER_ID,
+		        	CUSTOMER_NAME,
+		        	PASSWORD,
+		        	SSN,
+		        	PHOEN_NUMBER,
+		        	CITY,
+		        	PHOTO,
+		        	ADDRESS,
+		        	POSTAL_CODE)
+		        VALUES (#{customerID}, 
+		            #{customerName},
+		            #{password}, 
+		            #{ssn}, 
+		            #{phone},
+		            #{city},
+		            #{photo},
+		            #{address},
+		            #{postalCode}
+		        )
+		  </insert>
+		  
+		 <update
+			  id="updateCustomer"
+			  parameterType="com.bit_trade.web.domain.CustomerDTO"
+			  flushCache="true"
+			  statementType="PREPARED"
+			  timeout="20">
+			  UPDATE CUSTOMERS
+			  SET PHOEN_NUMBER = #{phone},
+			  CITY = #{city}, 
+			  ADDRESS = #{address},
+			  POSTAL_CODE = #{postalCode},
+			  PASSWORD = #{password}
+			  WHERE CUSTOMER_ID LIKE #{customerID}
+		  </update>
+		
+		  <delete
+			  id="deleteCustomer"
+			  parameterType="com.bit_trade.web.domain.CustomerDTO"
+			  flushCache="true"
+			  statementType="PREPARED"
+			  timeout="20">
+			  DELETE FROM CUSTOMERS 
+			  WHERE CUSTOMER_ID LIKE #{customerID}
+		  </delete>
+		  
+</mapper>
