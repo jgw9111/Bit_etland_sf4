@@ -15,14 +15,10 @@
 	        	ADDRESS,
 	        	POSTAL_CODE postalCode
 			   FROM CUSTOMERS
-			   <where>
-			   		<if test="attr=='customerID'">
-			 		   WHERE CUSTOMER_ID LIKE #{customerID}
-			   		</if>
-			   		<if test="attr=='password'">
-			 		   AND PASSWORD LIKE #{password}
-			   		</if>
-			   </where> 
+	 		   WHERE CUSTOMER_ID LIKE #{customerID}
+		   		<if test="password !=null">
+		 		   AND PASSWORD LIKE #{password}
+		   		</if>
 	 	 </select>
 	 	 
  	   <insert 

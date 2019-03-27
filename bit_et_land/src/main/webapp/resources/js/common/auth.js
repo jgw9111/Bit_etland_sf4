@@ -71,7 +71,11 @@ auth = (()=>{
 				datatype:'json',
 				contentType:'application/json',
 				success: d=>{
-					alert('성공 '+d.customerID);
+					if(d.customerID!==''){
+						alert('로그인 성공 '+d.customerID);
+					}else{
+						alert('로그인 실패');
+					};
 				},
 				error : e=>{
 					alert('error');
