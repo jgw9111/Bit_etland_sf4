@@ -74,7 +74,7 @@ auth = (()=>{
 			let data = {customerID:$('form input[name=uname]').val(),
 					password:$('form input[name=psw]').val()};
 			$.ajax({
-				url: $.ctx()+'/cust/login',
+				url: $.ctx()+'/users/cust/'+data.customerID,
 				type: 'POST',
 				data:JSON.stringify(data),
 				datatype:'json',
@@ -82,10 +82,8 @@ auth = (()=>{
 				success: d=>{
 					if(d.customerID!==''){
 						alert('로그인 성공 '+d.customerID);
-						$(r_cnt).html(compo.cust_my_page({
-							name:d.customerName,
-							id:d.customerID
-						}));
+				/*		$(r_cnt).html(compo.cust_my_page());*/
+						cust.init();
 					}else{
 						alert('로그인 실패');
 					};
@@ -108,19 +106,94 @@ auth = (()=>{
 				postalCode:$('input[name=postalCode]').val()
 		};
 		$.ajax({
-			url :$.ctx()+'/cust/join',
+			url :$.ctx()+'/users/cust/',
 			type :'post',
 			data:JSON.stringify(data),
 			dataType:'json',
 			contentType:'application/json',
 			success: d=>{
-				alert('성공'+d.msg);
+				if(d.customerID!==''){
+					alert('회원가입 성공'+d.msg);
+					$(r_cnt).html(compo.cust_login_form());
+					$('form button[type=submit]').click(e=>{
+						e.preventDefault();
+						login(); //클릭이벤트 처리
+					});
+				}
+				else{
+					alert('회원가입 실패');
+					$(r_cnt).html(compo.cust_join_form());
+					join();
+				};
+				
 			},
 			error: e=>{
 				alert('error');
 			}
 		});
 	};
+	let register =()=>{
+		let data = {
+				employeeId:$('input[name=employeeId]').val(),
+				manager:$('input[name=manager]').val(),
+				name:$('input[name=name]').val(),
+				birthDate:$('input[name=birthDate]').val(),
+				notes:$('input[name=notes]').val(),
+				photo:$('input[name=photo]').val()
+		};
+		$.ajax({
+			url :$.ctx()+'/users/emp/',
+			type :'post',
+			data:JSON.stringify(data),
+			dataType:'json',
+			contentType:'application/json',
+			success: d=>{
+				if(d.employeeId!==''){
+					alert('회원가입 성공'+d.msg);
+					$(r_cnt).html(compo.cust_login_form());
+					$('form button[type=submit]').click(e=>{
+						e.preventDefault();
+						login(); //클릭이벤트 처리
+					});
+				}
+				else{
+					alert('회원가입 실패');
+					$(r_cnt).html(compo.cust_join_form());
+					join();
+				};
+				
+			},
+			error: e=>{
+				alert('error');
+			}
+		});
+	};
+	let access =()=>{
+		
+		let data = {employeeId:$('form input[name=uname]').val(),
+				name:$('form input[name=psw]').val()};
+		$.ajax({
+			url: $.ctx()+'/users/cust/'+data.customerID,
+			type: 'POST',
+			data:JSON.stringify(data),
+			datatype:'json',
+			contentType:'application/json',
+			success: d=>{
+				if(d.customerID!==''){
+					alert('로그인 성공 '+d.customerID);
+					$(r_cnt).html(compo.cust_my_page({
+						name:d.customerName,
+						id:d.customerID
+					}));
+				}else{
+					alert('로그인 실패');
+				};
+			},
+			error : e=>{
+				alert('error');
+			}
+		});
+};
 	let mypage =()=>{};
 	return {
 		init:init
