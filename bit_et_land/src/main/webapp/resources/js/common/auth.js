@@ -17,7 +17,7 @@ auth = (()=>{
 			// 로그인 폼 디폴트
 			$(r_cnt).html(compo.cust_login_form());
 			$('form button[type=submit]').click(e=>{
-				e.preventDefault(); // 디폴트인 html 막는 것
+				e.preventDefault(); // 이벤트 버블링을 막는 것 -> 파생되는 액션을 취하지 않음 
 				login(); //클릭이벤트 처리
 			});
 			// 네비게이션
@@ -47,6 +47,11 @@ auth = (()=>{
 					case 'join':
 						$(r_cnt).empty();
 						$(compo.cust_join_form()).appendTo(r_cnt);
+						$('form button[type=submit]').click(e=>{
+							e.preventDefault();
+							join(); //클릭이벤트 처리
+						});
+						
 						break;
 					case 'emp_register': 
 						$(r_cnt).empty();
@@ -77,7 +82,10 @@ auth = (()=>{
 				success: d=>{
 					if(d.customerID!==''){
 						alert('로그인 성공 '+d.customerID);
-						$(r_cnt).html(compo.cust_my_page());
+						$(r_cnt).html(compo.cust_my_page({
+							name:d.customerName,
+							id:d.customerID
+						}));
 					}else{
 						alert('로그인 실패');
 					};
@@ -88,7 +96,31 @@ auth = (()=>{
 			});
 	};
 
-	let join =()=>{};
+	let join =()=>{
+		let data = {
+				customerID:$('input[name=customerID]').val(),
+				customerName:$('input[name=customerName]').val(),
+				password:$('input[name=password]').val(),
+				ssn:$('input[name=ssn]').val(),
+				phone:$('input[name=phone]').val(),
+				city:$('input[name=city]').val(),
+				address:$('input[name=address]').val(),
+				postalCode:$('input[name=postalCode]').val()
+		};
+		$.ajax({
+			url :$.ctx()+'/cust/join',
+			type :'post',
+			data:JSON.stringify(data),
+			dataType:'json',
+			contentType:'application/json',
+			success: d=>{
+				alert('성공'+d.msg);
+			},
+			error: e=>{
+				alert('error');
+			}
+		});
+	};
 	let mypage =()=>{};
 	return {
 		init:init

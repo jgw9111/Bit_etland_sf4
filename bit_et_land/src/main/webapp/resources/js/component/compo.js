@@ -51,27 +51,38 @@ compo = {
 			$('#nav').children().eq(3).html('<a href="#" id="emp_access">emp_Access</a>');
 		},*/
 		cust_join_form :()=>{
-			 return '<form action="/action_page.php" style="border:1px solid #ccc">'
+			 return '<form>'
 	            +'  <div class="container">'
 	            +'    <h1>Sign Up</h1>'
 	            +'    <p>Please fill in this form to create an account.</p>'
 	            +'    <hr>'
-	            
-	            +'    <label for="email"><b>Email</b></label>'
-	            +'    <input type="text" placeholder="Enter Email" name="email" required>'
+	            +'	<div id=join_form>'
+	            +'    <label for="customerID"><b>아이디</b></label></br>'
+	            +'    <input type="text" placeholder="Enter Email" name="customerID" required> </br>'
 	        
-	            +'    <label for="psw"><b>Password</b></label>'
-	            +'    <input type="password" placeholder="Enter Password" name="psw" required>'
+	            +'    <label for="customerName"><b>이름</b></label></br>'
+	            +'    <input type="text" placeholder="Enter Name" name="customerName" required> </br>'
+	            
+	            +'    <label for="password"><b>비밀번호</b></label></br>'
+	            +'    <input type="password" placeholder="Enter Password" name="password" required> </br>'
 	    
-	            +'    <label for="psw-repeat"><b>Repeat Password</b></label>'
-	            +'    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>'
+	            +'    <label for="ssn"><b>주민등록번호</b></label></br>'
+	            +'    <input type="text" placeholder="Enter ssn" name="ssn" required> </br>'
+	           
+	            +'    <label for="phone"><b>핸드폰번호</b></label></br>'
+	            +'    <input type="text" placeholder="Enter phone" name="phone" required> </br>'
+	          
+	            +'    <label for="city"><b>지번 주소</b></label></br>'
+	            +'    <input type="text" placeholder="Enter city" name="city" required> </br>'
+	            +'    <label for="address"><b>상세 주소</b></label></br>'
+	            +'    <input type="text" placeholder="Enter address" name="address" required> </br>'
+	            +'    <label for="postalCode"><b>우편번호</b></label></br>'
+	            +'    <input type="text" placeholder="Enter postalCode" name="postalCode" required> </br>'
 	            
 	            +'    <label>'
-	            +'      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me'
+	            +'      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me </br>'
 	            +'    </label>'
-	            
-	            +'    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>'
-	    
+	            +'	</div>'
 	            +'    <div class="clearfix">'
 	            +'      <button type="button" class="cancelbtn">Cancel</button>'
 	            +'      <button type="submit" class="signupbtn">Sign Up</button>'
@@ -108,7 +119,7 @@ compo = {
 	            +'  </div>'
 	            +'</form>';
 		},
-		cust_my_page :()=>{
+		cust_my_page :x=>{
 			return +'<body class="w3-light-grey">'
 			
 			+'<!-- Page Container -->'
@@ -116,19 +127,17 @@ compo = {
 			
 			  +'<!-- The Grid -->'
 			  +'<div class="w3-row-padding">'
-			+'  '
 			    +'<!-- Left Column -->'
 			    +'<div class="w3-third">'
-			+'    '
 			      +'<div class="w3-white w3-text-grey w3-card-4">'
 			        +'<div class="w3-display-container">'
 			          +'<img src="https://pbs.twimg.com/profile_images/992075910324019200/CesIZM-c.jpg">'
 			          +'<div class="w3-display-bottomleft w3-container w3-text-black">'
-			            +'<h2>Jane Doe</h2>'
+			            +'<h2>'+x.name+'</h2>'
 			          +'</div>'
 			        +'</div>'
 			        +'<div class="w3-container">'
-			          +'<p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Designer</p>'
+			          +'<p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>'+x.id+'</p>'
 			          +'<p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>London, UK</p>'
 			          +'<p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>ex@mail.com</p>'
 			          +'<p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>1224435534</p>'
