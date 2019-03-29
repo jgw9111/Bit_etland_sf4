@@ -10,6 +10,7 @@ app = (()=>{
 		$.when(
 				$.getScript($.js()+'/component/compo.js'),
 				$.getScript($.js()+'/customer/cust.js'),
+				$.getScript($.js()+'/product/prod.js'),
 				$.getScript($.js()+'/common/auth.js'),
 				$.getScript($.js()+'/employee/emp.js')
 		).done(()=>{

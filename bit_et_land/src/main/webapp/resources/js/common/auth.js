@@ -31,6 +31,8 @@ auth = (()=>{
 				.appendTo(l_cnt+' ul.nav')
 				.click(function(){
 					let that = $(this).attr('name');
+					$(this).addClass('active');
+					$(this).siblings().removeClass('active');
 					alert(j.val+' 누름');
 					switch(that){
 					case 'login':
@@ -63,6 +65,7 @@ auth = (()=>{
 						break;
 					};
 				});
+				$('[name=login]').addClass('active');
 			});
 		})
 		.fail(()=>{
@@ -74,7 +77,7 @@ auth = (()=>{
 			let data = {customerID:$('form input[name=uname]').val(),
 					password:$('form input[name=psw]').val()};
 			$.ajax({
-				url: $.ctx()+'/users/cust/'+data.customerID,
+				url: $.ctx()+'/customers/'+data.customerID,
 				type: 'POST',
 				data:JSON.stringify(data),
 				datatype:'json',
@@ -106,7 +109,7 @@ auth = (()=>{
 				postalCode:$('input[name=postalCode]').val()
 		};
 		$.ajax({
-			url :$.ctx()+'/users/cust/',
+			url :$.ctx()+'/customers',
 			type :'post',
 			data:JSON.stringify(data),
 			dataType:'json',
@@ -142,7 +145,7 @@ auth = (()=>{
 				photo:$('input[name=photo]').val()
 		};
 		$.ajax({
-			url :$.ctx()+'/users/emp/',
+			url :$.ctx()+'/employees',
 			type :'post',
 			data:JSON.stringify(data),
 			dataType:'json',
@@ -173,7 +176,7 @@ auth = (()=>{
 		let data = {employeeId:$('form input[name=uname]').val(),
 				name:$('form input[name=psw]').val()};
 		$.ajax({
-			url: $.ctx()+'/users/cust/'+data.customerID,
+			url: $.ctx()+'/customers/'+data.customerID,
 			type: 'POST',
 			data:JSON.stringify(data),
 			datatype:'json',

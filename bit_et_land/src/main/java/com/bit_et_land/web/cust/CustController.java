@@ -31,7 +31,6 @@ public class CustController {
 	@Autowired Customer cust;
 	@Autowired PrintService ps;
 	@Autowired CustomerMapper custMap;
-	@Autowired EmployeeMapper empMap;
 	@Autowired Users<?> user;
 	@Autowired Map<String,Object> map;
 	
