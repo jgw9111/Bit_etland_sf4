@@ -290,6 +290,60 @@ compo = {
 			    +'</a>'
 			  +'</div>'
 			+'</div>'
-
+		},
+		prod_post:()=>{
+			return '<div class="form-group">'
+			  +'<label for="productName">상품명:</label>'
+			  +'<input type="text" class="form-control" id="productName" name="productName">'
+			+'</div>'
+			+'<div class="form-group">'
+			  +'<label for="price">가격:</label>'
+			  +'<input type="text" class="form-control" id="price" name="price">'
+			+'</div>'
+			+'<h3>색상</h3>'
+			+'<div class="checkbox">'
+			  +'<label><input type="checkbox" value="">블랙</label>'
+			+'</div>'
+			+'<div class="checkbox">'
+			  +'<label><input type="checkbox" value="">화이트</label>'
+			+'</div>'
+			+'<div class="checkbox disabled">'
+			  +'<label><input type="checkbox" value="" disabled>블루</label>'
+			+'</div>'
+			
+			+'<label class="checkbox-inline"><input type="checkbox" value="">Option 1</label>'
+			+'<label class="checkbox-inline"><input type="checkbox" value="">Option 2</label>'
+			+'<label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>'
+			
+			+'<div class="radio">'
+			  +'<label><input type="radio" name="supplierId" checked>삼성전자</label>'
+			+'</div>'
+			+'<div class="radio">'
+			  +'<label><input type="radio" name="optradio">Option 2</label>'
+			+'</div>'
+			+'<div class="radio disabled">'
+			  +'<label><input type="radio" name="optradio" disabled>Option 3</label>'
+			+'</div>'
+			
+			+'<label class="radio-inline"><input type="radio" name="optradio" checked>Option 1</label>'
+			+'<label class="radio-inline"><input type="radio" name="optradio">Option 2</label>'
+			+'<label class="radio-inline"><input type="radio" name="optradio">Option 3</label>'
+			
+			+'<div class="form-group">'
+			  +'<label for="sel1">카테고리</label>'
+			  +'<select class="form-control" id="sel1">'
+			    +'<option>1</option>'
+			    +'<option>2</option>'
+			    +'<option>3</option>'
+			    +'<option>4</option>'
+			  +'</select>'
+			+'</div>'
+			
+			+'<p>제조날짜: <input type="text" id="datepicker"></p>'
+			
+			+'<div class="form-group">'
+			  +'<label for="comment">상세설명:</label>'
+			  +'<textarea class="form-control" rows="5" id="comment"></textarea>'
+			+'</div>';
 		}
 }

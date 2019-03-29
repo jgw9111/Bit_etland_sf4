@@ -13,12 +13,21 @@ prod= (()=>{
 		setContentView();
 	};
 	let setContentView=()=>{
-		$.getScript(compojs,()=>{
 			$(r_cnt).empty();
 			$(compo.carousel()).appendTo(r_cnt);
-		});
-		
 	};
-	return {init:init};
+let post =()=>{
 	
+};
+let get =()=>{
+	
+};
+let put =()=>{
+	
+};
+let del =()=>{
+	
+};
+
+return {init:init};
 })();
