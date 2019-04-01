@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit_et_land.web.emp.EmployeeMapper">
+	  	<select id="findOneEmployees" resultType="com.bit_et_land.web.emp.Employee">
+	 		   SELECT EMPLOYEE_ID employeeId, 
+	 		   		MANAGER manager,
+	 		   		NAME name,
+	 		   		BIRTH_DATE birthDate,
+	 		   		PHOTO photo,
+	 		   		NOTES notes
+ 		   		FROM EMPLOYEES
+	 	</select>
+	 	 
+ 	  	 <insert 
+	 	 	id="insertEmployee"
+	 	 	parameterType="com.bit_et_land.web.emp.Employee"
+			flushCache="true"
+			statementType="PREPARED"
+			timeout="20">
+		       
+		  </insert>
+		  
+		 <update
+			  id="updateEmployee"
+			  parameterType="com.bit_et_land.web.emp.Employee"
+			  flushCache="true"
+			  statementType="PREPARED"
+			  timeout="20">
+			  UPDATE CUSTOMERS
+			  SET PHOEN_NUMBER = #{phone},
+			  CITY = #{city}, 
+			  ADDRESS = #{address},
+			  POSTAL_CODE = #{postalCode},
+			  PASSWORD = #{password}
+			  WHERE CUSTOMER_ID LIKE #{customerID}
+		  </update>
+		
+		  <delete
+			  id="deleteEmployee"
+			  parameterType="com.bit_et_land.web.emp.Employee"
+			  flushCache="true"
+			  statementType="PREPARED"
+			  timeout="20">
+			  DELETE FROM CUSTOMERS 
+			  WHERE CUSTOMER_ID LIKE #{customerID}
+		  </delete>
+		  
+</mapper>

@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_et_land.web.cmm.IConsumer;
 import com.bit_et_land.web.cmm.IFunction;
+import com.bit_et_land.web.cmm.ISupplier;
 import com.bit_et_land.web.cmm.PrintService;
+import com.bit_et_land.web.cmm.Proxy;
 import com.bit_et_land.web.cmm.Users;
-import com.bit_et_land.web.emp.Employee;
-import com.bit_et_land.web.emp.EmployeeMapper;
 
 @RestController
 public class CustController {
@@ -33,6 +32,7 @@ public class CustController {
 	@Autowired CustomerMapper custMap;
 	@Autowired Users<?> user;
 	@Autowired Map<String,Object> map;
+	@Autowired Proxy pxy;
 	
 	@PostMapping("/customers/{userid}")
 	public Customer login(@PathVariable String userid,@RequestBody Customer param) {
@@ -43,12 +43,15 @@ public class CustController {
 	}
 	@SuppressWarnings("unchecked")
 	@GetMapping("/customers/page/{page}")
-	public List<Customer> list(@PathVariable String page,@RequestBody Map<?,?> param) {
+	public List<Customer> list(@PathVariable String page) {
 		logger.info("============ list ============");
-		IFunction i =  (Object o)-> custMap.selectCustomers(param);
-		List<Customer> ls = (List<Customer>)i.apply(param);
-		ps.accept(ls);
-		return ls;
+		map.clear();
+		map.put("pageNum","1");
+		map.put("pageSize","5");
+		map.put("blockSize","5");
+		pxy.carryOut(map);
+		IFunction i = (Object o)-> custMap.selectCustomers(pxy);
+		return (List<Customer>) i.apply(pxy);
 	}
 	
 	@PostMapping("/customers")

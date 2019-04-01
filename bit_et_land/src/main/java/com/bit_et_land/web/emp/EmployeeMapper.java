@@ -12,6 +12,7 @@ public interface EmployeeMapper {
 	public List<Employee> selectEmployeeList(Map<?,?> map);
 	public List<Employee> selectEmployees(Map<?,?> map);
 	public Employee selectEmployee(Employee emp);
+	public Employee findOneEmployees();
 	public int countEmployees(Map<?,?> map);
 	public boolean exsitEmployee(Employee emp);
 	public void updateEmployee(Employee emp);

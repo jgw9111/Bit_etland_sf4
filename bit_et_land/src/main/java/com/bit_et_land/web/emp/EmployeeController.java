@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_et_land.web.cmm.IConsumer;
 import com.bit_et_land.web.cmm.IFunction;
+import com.bit_et_land.web.cmm.ISupplier;
 import com.bit_et_land.web.cmm.PrintService;
 import com.bit_et_land.web.cmm.Users;
 import com.bit_et_land.web.cust.CustController;
@@ -30,16 +31,15 @@ public class EmployeeController {
 	@Autowired Users<?> user;
 	@Autowired Map<String,Object> map;
 	
-	@PostMapping("/employees/{userid}")
-	public Employee access(@PathVariable String userid,@RequestBody Employee param) {
-		logger.info("============ login ============");
-		IFunction i = (Object o) -> empMap.selectEmployee((Employee)param);
-	
-		return (Employee)i.apply(param);
+	@GetMapping("/employees")
+	public Employee access() {
+		logger.info("============ access ============");
+		ISupplier i = ()-> empMap.findOneEmployees();
+		return (Employee) i.get();
 	}
 	@SuppressWarnings("unchecked")
 	@GetMapping("/employees/page/{page}")
-	public List<Employee> list(@PathVariable String user,@RequestBody Map<?,?> param) {
+	public List<Employee> list(@PathVariable String page,@RequestBody Map<?,?> param) {
 		logger.info("============ list ============");
 		IFunction i =  (Object o)-> empMap.selectEmployees(param);
 		List<Employee> ls = (List<Employee>)i.apply(param);

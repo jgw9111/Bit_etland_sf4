@@ -21,6 +21,22 @@
 		   		</if>
 	 	 </select>
 	 	 
+	 	   	<select id="selectCustomers" resultType="com.bit_et_land.web.cust.Customer"
+	 	   	parameterType="com.bit_et_land.web.cmm.Proxy">
+	 		   SELECT 
+			  	CUSTOMER_ID customerID,
+	        	CUSTOMER_NAME customerName,
+	        	PASSWORD,
+	        	SSN,
+	        	PHOTO,
+	        	PHOEN_NUMBER phone,
+	        	CITY,
+	        	ADDRESS,
+	        	POSTAL_CODE postalCode
+			   FROM CUSTOMERS
+	 	 </select>
+	 	 
+	 	 
  	   <insert 
 	 	 	id="insertCustomer"
 	 	 	parameterType="com.bit_et_land.web.cust.Customer"
