@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data @Component @Lazy // 호출할 때 움직인다 (js와 유사함)
 public class Customer {
-	private String startRow,endRow,rnum,
+	private String 
 	   customerID, 
 	   customerName, 
 	   password, 

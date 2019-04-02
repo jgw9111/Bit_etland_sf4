@@ -27,17 +27,9 @@ cust = (()=>{
 				address:data.address,
 				postalCode:data.postalCode
 			}));
-			
 			$(l_cnt+' ul.nav').empty();
-			let arr =[
-				{name:'mypage',val:'마이페이지'},
-				{name:'shop',val:'쇼핑몰'},
-				{name:'modify ',val:'정보수정'},
-				{name:'withdraw',val:'회원탈퇴'},
-				{name:'purchase',val:'구매내역'},
-				{name:'basket',val:'장바구니'}
-				];
-			$.each(arr,(i,j)=>{
+			;
+			$.each(custNav(),(i,j)=>{
 				$('<li><a href="#">'+j.val+'</a></li>').attr('name',j.name)
 				.appendTo(l_cnt+' ul.nav').click(function(){
 					// 버튼 클릭시 색 활성화
@@ -69,8 +61,12 @@ cust = (()=>{
 	let list=()=>{
 		reset();
 		$.getJSON(_+'/customers/page/1',d=>{
+			$(r_cnt).empty();
 			alert('페이지네이션');
-			let html = '<h2>사용자 정보</h2><table class="table table-bordered"><tr>'
+			$('<div class="grid-item" id="cust_lst">'+'<h2>사용자 정보</h2></div>'
+					+'<div class="grid-item" id="content_2">').appendTo('#right_content');
+			let table =
+					'<table class="table table-bordered"><tr>'
 					+'<th>NO.</th>'
 					+'<th>아이디</th>'
 					+'<th>이름</th>'
@@ -80,8 +76,8 @@ cust = (()=>{
 					+'<th>주소</th>'
 					+'<th>우편번호</th>'
 					+'</tr>'
-			$.each(d,(i,j)=>{
-				html += '<tr><td>'+j.no+'</td>'
+			$.each(d.ls,(i,j)=>{
+				table += '<tr><td>'+j.rownum+'</td>'
 				+'<td>'+j.customerID+'</td>'
 				+'<td>'+j.customerName+'</td>'
 				+'<td>'+j.ssn+'</td>'
@@ -91,10 +87,42 @@ cust = (()=>{
 				+'<td>'+j.postalCode+'</td>'
 				+'</tr>'
 			});
-			html += '</table>';
-			$(r_cnt).html(html);
+			table += '</table></div>';
+			$(table).appendTo('#content_2');
+			$('<div style="height: 50px"></div>').appendTo('#cust_lst');
+			let html = '<div class="pagination">';
+			if(d.pxy.existPrev){
+				html += '<a href="">&laquo;</a>';
+			}
+			let i=0,a=1;
+			for(i=0;i<5;i++){
+				if(d.pxy.pageNum == a){
+					html+='<li><a href="#" class ="page active">'+a+'</a></li>';
+					a++;
+				}else{
+					html+='<li><a href="#" class ="page">'+a+'</a></li>';
+					a++;
+				}
+			}
+			if(d.pxy.existNext){
+				html += '<a href="">&raquo;</a>';
+			}
+			html +='</div>';
+			$(html).appendTo('#content_2');
 		});
+		
 	};
 	let mypage =()=>{};
+	let custNav =()=>{
+		return [
+			{name:'mypage',val:'마이페이지'},
+			{name:'shop',val:'쇼핑몰'},
+			{name:'modify ',val:'정보수정'},
+			{name:'withdraw',val:'회원탈퇴'},
+			{name:'purchase',val:'구매내역'},
+			{name:'basket',val:'장바구니'}
+			];
+		
+	};
 	return {init:init,list:list}
 })();

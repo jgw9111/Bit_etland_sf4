@@ -13,6 +13,7 @@ app = (()=>{
 				$.getScript($.js()+'/product/prod.js'),
 				$.getScript($.js()+'/common/auth.js'),
 				$.getScript($.js()+'/employee/emp.js')
+				
 		).done(()=>{
 			auth.init();
 		}

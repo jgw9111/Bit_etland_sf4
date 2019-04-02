@@ -43,7 +43,7 @@ public class CustController {
 	}
 	@SuppressWarnings("unchecked")
 	@GetMapping("/customers/page/{page}")
-	public List<Customer> list(@PathVariable String page) {
+	public Map<?,?> list(@PathVariable String page) {
 		logger.info("============ list ============");
 		map.clear();
 		map.put("pageNum","1");
@@ -51,7 +51,11 @@ public class CustController {
 		map.put("blockSize","5");
 		pxy.carryOut(map);
 		IFunction i = (Object o)-> custMap.selectCustomers(pxy);
-		return (List<Customer>) i.apply(pxy);
+		List<?> ls = (List<?>) i.apply(pxy);
+		map.clear();
+		map.put("ls",ls);
+		map.put("pxy",pxy);
+		return map;
 	}
 	
 	@PostMapping("/customers")

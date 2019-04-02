@@ -15,6 +15,7 @@ prod= (()=>{
 	let setContentView=()=>{
 			$(r_cnt).empty();
 			$(compo.carousel()).appendTo(r_cnt);
+			
 	};
 let post =()=>{
 	

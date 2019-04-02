@@ -19,15 +19,10 @@ auth = (()=>{
 			$('form button[type=submit]').click(e=>{
 				e.preventDefault(); // 이벤트 버블링을 막는 것 -> 파생되는 액션을 취하지 않음 
 				login(); //클릭이벤트 처리
-				alert('로그인 버튼 클릭 ::::d:::'+d);
 			});
 			// 네비게이션
 			$(l_cnt+' ul.nav').empty();
-			let arr =[{name:'login',val:'Login'},
-				{name:'join',val:'Join'},
-				{name:'emp_access',val:'Emp_access'},
-				{name:'emp_register',val:'Emp_register'}];
-			$.each(arr,(i,j)=>{
+			$.each(authNav(),(i,j)=>{
 				$('<li><a href="#">'+j.val+'</a></li>').attr('name',j.name)
 				.appendTo(l_cnt+' ul.nav')
 				.click(function(){
@@ -74,6 +69,8 @@ auth = (()=>{
 				});
 				$('[name=login]').addClass('active');
 			});
+			
+			
 		})
 		.fail(()=>{
 			alert('/component/compo.js 를 찾지 못했습니다.');
@@ -198,6 +195,7 @@ auth = (()=>{
 							if($('#name').val()===d.name){
 								//고객명단
 								cust.list();
+								emp.init();
 								alert('이름'+d.name);
 							}else{}
 						});
@@ -212,6 +210,13 @@ auth = (()=>{
 			// 사원 전용 페이지입니다.
 			// 되돌아 가기 버튼
 		}
+	};
+	let authNav=()=>{
+		return [{name:'login',val:'Login'},
+			{name:'join',val:'Join'},
+			{name:'emp_access',val:'Emp_access'},
+			{name:'emp_register',val:'Emp_register'}];
+		
 	};
 	return {
 		init:init
