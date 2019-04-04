@@ -32,6 +32,11 @@
 		 		   AND PASSWORD LIKE #{password}
 		   		</if>
 	 	 </select>
+	 	 
+		 <select id="countAllCustomers" resultType="int">
+	 		   SELECT COUNT(*) FROM CUSTOMERS
+	 	 </select>
+	 	 
 				 <!-- SELECT 
 			  	CUSTOMER_ID customerID,
 	        	CUSTOMER_NAME customerName,
@@ -52,8 +57,6 @@
 	  			ORDER BY rownum DESC
 	    		LIMIT #{startRow}, #{pageSize}
  		 </select>
-	 	 
-	 	 
  	   <insert 
 	 	 	id="insertCustomer"
 	 	 	parameterType="com.bit_et_land.web.cust.Customer"

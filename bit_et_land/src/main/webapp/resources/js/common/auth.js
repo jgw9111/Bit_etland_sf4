@@ -194,7 +194,7 @@ auth = (()=>{
 							e.preventDefault();
 							if($('#name').val()===d.name){
 								//고객명단
-								cust.list();
+								cust.list(1);
 								emp.init();
 								alert('이름'+d.name);
 							}else{}

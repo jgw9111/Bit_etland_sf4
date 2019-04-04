@@ -1,3 +1,4 @@
+"use strict";
 var emp = emp ||{};
 emp =(()=>{
 	let _,js,compojs,r_cnt,l_cnt;
@@ -25,13 +26,18 @@ emp =(()=>{
 				$(this).addClass('active');
 				$(this).siblings().removeClass('active');
 				switch (that) {
-				case "custlist": 
+				case "custlist":
+					$(r_cnt).empty();
+					cust.list(1);
 					break;
 				case "prodregi": 
 					$(r_cnt).empty();
 					$(compo.prod_regi()).appendTo(r_cnt);
+					prod.post();
 					break;
 				case "prodlist":
+					$(r_cnt).empty();
+					prod.get(1);
 					break;
 				case "prodstatistics":
 					break;

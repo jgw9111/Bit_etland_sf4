@@ -29,23 +29,38 @@ public class Proxy {
 			System.out.println("pageSize:::"+pageSize);
 			System.out.println("blockSize:::"+blockSize);
 			
-			startRow = (pageNum -1)*pageSize +1;
+			rowCount = (int)paramMap.get("row_count");
+			int nmg = rowCount % pageSize;
+			int pageCount = (nmg == 0) ? rowCount / pageSize : rowCount / pageSize + 1;
+		        
+			startRow = (pageNum -1)*pageSize;
 			endRow = (rowCount > startRow + (pageSize-1) )? startRow + (pageSize-1) : rowCount;
+			System.out.println("@@스타트로우@@"+startRow+"\n @@엔드로우@@"+endRow);
 			
 			int blockNum = (pageNum-1) / blockSize ;
+			if(existPrev) {
+				startPage = blockNum*blockSize+1;
+			}else {
+				startPage = 1;
+			}
 			
-			startPage = blockNum * blockSize + 1 ;
-			endPage = startPage + (blockSize-1);
+			endPage = startPage+(blockSize-1);
+			startPage = pageNum -((pageNum-1)%blockSize);
 			
+			if(endPage>pageCount) {
+				endPage = pageCount;
+			}
+			
+			System.out.println("@@스타트페이지@@"+startPage+"\n @@엔드페이지@@"+endPage);
 			prevBlock = startPage - pageSize;
 			nextBlock = startPage + pageSize;
 
 			if(prevBlock < 0) {
-			existNext = false;
-			existPrev = true;
+				existNext = true;
+				existPrev = false;
 			}else {
-			existNext = true;
-			existPrev = false;
+				existNext = false;
+				existPrev = true;
 			}
 		}
 }

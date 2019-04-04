@@ -15,6 +15,7 @@ public interface CustomerMapper {
 	public List<?> selectCustomers(Proxy pxy);
 	public Customer selectCustomer(Customer cust);
 	public int countCustomers(Object o);
+	public int countAllCustomers();
 
 	public Map<String, Object> selectProfile(Map<?,?> map);
 	public void deleteCustomer(Customer cust);

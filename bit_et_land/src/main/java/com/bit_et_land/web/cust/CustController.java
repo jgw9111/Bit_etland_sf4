@@ -41,14 +41,16 @@ public class CustController {
 	
 		return (Customer)i.apply(param);
 	}
-	@SuppressWarnings("unchecked")
 	@GetMapping("/customers/page/{page}")
 	public Map<?,?> list(@PathVariable String page) {
 		logger.info("============ list ============");
 		map.clear();
-		map.put("pageNum","1");
-		map.put("pageSize","5");
-		map.put("blockSize","5");
+		map.put("page_num",page);
+		System.out.println("page:::"+page);
+		map.put("page_size","5");
+		map.put("block_size","5");
+		ISupplier sup = ()-> custMap.countAllCustomers();
+		map.put("row_count", sup.get());
 		pxy.carryOut(map);
 		IFunction i = (Object o)-> custMap.selectCustomers(pxy);
 		List<?> ls = (List<?>) i.apply(pxy);

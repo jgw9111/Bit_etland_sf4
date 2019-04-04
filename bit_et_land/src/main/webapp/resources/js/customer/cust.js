@@ -58,9 +58,9 @@ cust = (()=>{
 			$('[name=mypage]').addClass('active');
 		})
 	};
-	let list=()=>{
+	let list=x=>{
 		reset();
-		$.getJSON(_+'/customers/page/1',d=>{
+		$.getJSON(_+'/customers/page/'+x,d=>{
 			$(r_cnt).empty();
 			alert('페이지네이션');
 			$('<div class="grid-item" id="cust_lst">'+'<h2>사용자 정보</h2></div>'
@@ -90,25 +90,44 @@ cust = (()=>{
 			table += '</table></div>';
 			$(table).appendTo('#content_2');
 			$('<div style="height: 50px"></div>').appendTo('#cust_lst');
-			let html = '<div class="pagination">';
+			$('<div class="pagination"></div>').appendTo('#content_2');
 			if(d.pxy.existPrev){
-				html += '<a href="">&laquo;</a>';
+				$('<li><a>&laquo;</a></li>')
+				.attr('href',_+'/customers/page/'+d.pxy.prevBlock)
+				.appendTo('.pagination')
+				.click(()=>{
+					list(d.pxy.prevBlock);
+				});
 			}
-			let i=0,a=1;
-			for(i=0;i<5;i++){
-				if(d.pxy.pageNum == a){
-					html+='<li><a href="#" class ="page active">'+a+'</a></li>';
-					a++;
+			let i=0;
+			for(i=d.pxy.startPage;i<=d.pxy.endPage;i++){
+				if(d.pxy.pageNum == i){
+					$('<li><a class ="page active">'+i+'</a></li>')
+					.attr('href',_+'/customers/page/'+i)
+					.appendTo('.pagination')
+					.click(function(){
+						alert('클릭 페이지::'+$(this).text());
+						list($(this).text());
+					});
 				}else{
-					html+='<li><a href="#" class ="page">'+a+'</a></li>';
-					a++;
+					$('<li><a class ="page">'+i+'</a></li>').attr('href',_+'/customers/page/'+i).appendTo('.pagination')
+					.click(function(){
+						alert('클릭 페이지::'+$(this).text());
+						list($(this).text());
+					});
 				}
 			}
 			if(d.pxy.existNext){
-				html += '<a href="">&raquo;</a>';
+				$('<li><a>&raquo;</a></li>')
+				.attr('href',_+'/customers/page/'+d.pxy.nextBlock)
+				.appendTo('.pagination')
+				.click(()=>{
+					alert('클릭 페이지::'+$(this).text());
+					list(d.pxy.nextBlock);
+				});
 			}
-			html +='</div>';
-			$(html).appendTo('#content_2');
+			/*html +='</div>';*/
+			/*$(html).appendTo('#content_2');*/
 		});
 		
 	};
