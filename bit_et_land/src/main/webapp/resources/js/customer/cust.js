@@ -15,6 +15,7 @@ cust = (()=>{
 	};
 	let onCreate =()=>{
 		setContentView();
+	
 	};
 	let setContentView=()=>{
 		$.getScript(compojs,(x)=>{
@@ -27,8 +28,17 @@ cust = (()=>{
 				address:data.address,
 				postalCode:data.postalCode
 			}));
+			$('#srch_btn').on('click',e=>{
+				e.preventDefault();
+				let search = $('#searchbox').val();
+				if($.fn.nullChecker([search])){
+					alert('검색어를 입력하세요'+search);
+				}else{
+					alert('엥'+search);
+					srch(search);
+				};
+			});
 			$(l_cnt+' ul.nav').empty();
-			;
 			$.each(custNav(),(i,j)=>{
 				$('<li><a href="#">'+j.val+'</a></li>').attr('name',j.name)
 				.appendTo(l_cnt+' ul.nav').click(function(){
@@ -131,6 +141,7 @@ cust = (()=>{
 		});
 		
 	};
+	
 	let mypage =()=>{};
 	let custNav =()=>{
 		return [
@@ -141,6 +152,33 @@ cust = (()=>{
 			{name:'purchase',val:'구매내역'},
 			{name:'basket',val:'장바구니'}
 			];
+	};
+	
+	let srch=x=>{
+		$.getJSON(_+'/phones/search/'+x,d=>{
+			$('#right_content').empty();
+			$('<div class="grid-item" id="prod_lst">'+'<h2>상품 검색 리스트</h2></div>'
+					+'<div class="grid-item" id="content_2">').appendTo('#right_content');
+			let table =
+					'<table class="table table-bordered"><tr>'
+					+'<th>NO.</th>'
+					+'<th>이름</th>'
+					+'<th>공급업체</th>'
+					+'<th>카테고리</th>'
+					+'<th>수량</th>'
+					+'<th>가격</th>'
+					+'</tr>'
+			$.each(d.list,(i,j)=>{
+				table += '<tr><td>'+j.rownum+'</td>'
+				+'<td>'+j.productName+'</td>'
+				+'<td>'+j.supplierName+'</td>'
+				+'<td>'+j.categoryName+'</td>'
+				+'<td>'+j.unit+'</td>'
+				+'<td>'+j.price+'</td>'
+				+'</tr>'
+			});
+			table += '</table></div>';
+		});
 		
 	};
 	return {init:init,list:list}

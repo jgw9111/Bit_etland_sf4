@@ -22,5 +22,40 @@
 	<select id="countAllProducts" resultType="int">
 	 	SELECT COUNT(*) FROM PRODUCTS
 	</select>
+  	<select id="selectProducts" resultType="com.bit_et_land.web.prod.Product">
+  		SELECT PRODUCT_NAME, PRICE, UNIT, SUPPLIER_NAME,CATEGORY_NAME
+        FROM PRODUCTS P
+            JOIN CATEGORIES C
+            ON C.CATEGORY_ID LIKE P.CATEGORY_ID
+            JOIN SUPPLIERS S
+            ON S.SUPPLIER_ID LIKE P.SUPPLIER_ID
+        WHERE
+        P.PRODUCT_NAME LIKE #{search}
+        OR S.SUPPLIER_NAME LIKE #{search}
+        OR C.CATEGORY_NAME LIKE #{search}
+        OR P.PRICE LIKE #{search}
+        OR P.UNIT LIKE #{search}
+  	</select>
+	<insert 
+	 	 	id="insertProduct"
+	 	 	parameterType="com.bit_et_land.web.prod.Product"
+			flushCache="true"
+			statementType="PREPARED"
+			timeout="20">
+		        SELECT PRODUCT_NAME, PRICE, UNIT, SUPPLIER_NAME,CATEGORY_NAME
+        		FROM PRODUCTS P
+		            JOIN CATEGORIES C
+		            ON C.CATEGORY_ID LIKE P.CATEGORY_ID
+		            JOIN SUPPLIERS S
+		            ON S.SUPPLIER_ID LIKE P.SUPPLIER_ID
+		        WHERE
+				        P.PRODUCT_NAME LIKE #{search}
+				        OR S.SUPPLIER_NAME LIKE #{search}
+				        OR C.CATEGORY_NAME LIKE #{search}
+				        OR P.PRICE LIKE #{search}
+				        OR P.UNIT LIKE #{search}
+		        )
+  	</insert>
+
 
 </mapper>

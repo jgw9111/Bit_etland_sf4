@@ -12,8 +12,12 @@ where supplier_id='SAMSUNG';
 delete from products;
 delete from suppliers;
 
+INSERT INTO CATEGORIES VALUES(1000,'smart_phone','DESCRIPTION');
+INSERT INTO CATEGORIES VALUES(1001,'desk_top','DESCRIPTION');
+INSERT INTO CATEGORIES VALUES(1002,'lab_top','DESCRIPTION');
+INSERT INTO CATEGORIES VALUES(1003,'air_cleaner','DESCRIPTION');
+INSERT INTO CATEGORIES VALUES(1004,'refrigerator','DESCRIPTION');
 
- 
 -- ======================================
 
 INSERT INTO SUPPLIERS VALUES('SAMSUNG','김승아','SAMSUNG','암천빌딩','서울특별시 강남구 테헤란로 421','06160','한국','010-2456-8822');

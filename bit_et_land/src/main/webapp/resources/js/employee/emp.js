@@ -15,6 +15,15 @@ emp =(()=>{
 	};
 	let onCreate = ()=>{
 		setContentView();
+		/*$('#srch_btn').on('click',e=>{
+			e.preventDefault();
+			let searchbox = $('#searchbox').val();
+			if($.fn.nullChecker(searchbox)){
+				alert('검색어를 입력하세요'+searchbox);
+			}else{
+				alert('엥'+searchbox);
+			};
+		});*/
 	};
 	let setContentView =()=>{
 		$(l_cnt+' ul.nav').empty();
@@ -59,7 +68,18 @@ emp =(()=>{
 			{name:'prodmodi',val:'상품수정'},
 			{name:'proddelete',val:'상품삭제'}
 			];
-		
+	};
+	
+	let srch=()=>{
+		$('#srch_btn').on('click',e=>{
+			e.preventDefault();
+			let searchbox = $('#searchbox').val();
+			if($.fn.nullChecker(searchbox)){
+				alert('검색어를 입력하세요'+searchbox);
+			}else{
+				alert('엥'+searchbox);
+			};
+		});
 	};
 	return {init:init};
 })();
