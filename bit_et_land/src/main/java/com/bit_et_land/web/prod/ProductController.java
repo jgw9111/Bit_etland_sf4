@@ -1,7 +1,10 @@
 package com.bit_et_land.web.prod;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.bit_et_land.web.cate.Category;
 import com.bit_et_land.web.cate.CategoryMapper;
@@ -38,6 +45,7 @@ public class ProductController {
 	@Autowired Category cate;
 	@Autowired SupplierMapper suppmap;
 	@Autowired Supplier supp;
+	@Resource(name = "uploadPath")private String uploadPath;
 	
 	@Transactional
 	@PostMapping("/phones")
@@ -113,7 +121,7 @@ public class ProductController {
 		map.clear();
 		map.put("srch",srch);
 		map.put("page_num",page);
-		map.put("page_size",9);
+		map.put("page_size","9");
 		map.put("block_size","5");
 		System.out.println("====search===="+srch+"\n ===page==="+page);
 		IFunction f = (Object o)-> prdmap.countSearchProducts(srch);
@@ -125,6 +133,16 @@ public class ProductController {
 		map.put("list",list);
 		map.put("pxy",pxy);
 		System.out.println("리스트 보기"+list.toString());
+		return map;
+	}
+	@RequestMapping(value="/phones/files",method=RequestMethod.POST)
+	public Map<?,?> fileUpload(MultipartHttpServletRequest req)throws Exception{
+		Iterator<String> it =req.getFileNames();
+		if(it.hasNext()) {
+			MultipartFile mf = req.getFile(it.next());
+		}
+		ps.accept("넘어온 파일명 ::"+req.getFile(it.next()));
+		ps.accept("파일 저장 경로 ::"+uploadPath);
 		return map;
 	}
 	

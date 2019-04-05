@@ -67,6 +67,30 @@ let post =()=>{
 			}
 		});
 	});
+	$('#img_upload_btn').click(function(e){
+		e.preventDefault();
+		alert('----------');
+		let ok = (this.files[0].name.match(/jpg|gif|png|jpeg/i)) ? true : false;
+		if(ok){
+			/*let fd = new FormData();
+			fd.append('file',this.file[0]);*/
+			$('#img_upload_frm').attr('action',_+'/phones/files');
+			$.ajax({
+				url:$('#img_upload_frm').attr('action'),
+				type:'post',
+				dataType:'text',
+				encType:"multipart/form-data",
+				beforeSubmit:function(){
+					alert('로딩');
+				},
+				success:d=>{
+					alert('파일 업로드 성공');
+				}
+			}).submit();
+		}else{
+			alert('gif,png,jpg,jpeg 파일만 업로드 가능합니다');
+		}
+	});
 };
 let get =x=>{
 	reset();

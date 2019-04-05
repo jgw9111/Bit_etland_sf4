@@ -1,3 +1,4 @@
+"use strict";
 var auth = auth || {}
 auth = (()=>{
 	let _,js,compojs,r_cnt,l_cnt;

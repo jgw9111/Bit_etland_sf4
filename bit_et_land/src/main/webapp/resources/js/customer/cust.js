@@ -35,7 +35,6 @@ cust = (()=>{
 					alert('검색어를 입력하세요'+search);
 				}else{
 					let val = {s:search,p:1};
-					alert('검색어 ::'+val);
 					srch(val);
 				};
 			});
@@ -174,8 +173,8 @@ cust = (()=>{
 			$.each(d.list,(i,j)=>{
 				table += '<tr><td>'+j.rownum+'</td>'
 				+'<td>'+j.productName+'</td>'
-				+'<td>'+j.supplierName+'</td>'
-				+'<td>'+j.categoryName+'</td>'
+				+'<td>'+j.supplierId+'</td>'
+				+'<td>'+j.categoryId+'</td>'
 				+'<td>'+j.unit+'</td>'
 				+'<td>'+j.price+'</td>'
 				+'</tr>'
@@ -226,33 +225,81 @@ cust = (()=>{
 			}
 			$('#grid_btn').click(e=>{
 				alert('그리드 보기 클릭');
-				let url=_+'/phones/'+x.s+'/grid/'+x.p;
-				$.getJSON(url,d=>{
-					let a = [1,2,3]
-					let i=0;
-					$('<div id="grid"/>').appendTo(r_cnt);
-					for(i=0;i<3;i++){
-						$('<div class="row progrid">'
-								+'</div>').appendTo('#grid');
-						$.each(a,(x,y)=>{
-							$('<div class="col-md-4">'
-									+'<div class="thumbnail">'
-									+'<a href="/w3images/lights.jpg" target="_blank">'
-									+'<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRanydDprvV35nlbHP2RwvjdyPrYgOgjevy7W_efJ2tTEVZvKKF" alt="Lights" style="width:100%">'
-									+'<div class="caption">'
-									+'<p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>'
-									+'</div>'
-									+'</a>'
-									+'</div>'
-									+'</div>').appendTo('.progrid')
-						}) 
-						
-					}
-				});
+				grid(x);
 			});
 			
 		});
 		
+	};
+	let grid =x=>{
+			$('#right_content').empty();
+			$('<div class="grid-item" id="srch_grid">'+'<h2>상품 검색 그리드</h2></div>'
+					+'<button id="list_btn">리스트로 보기</button>'
+					+'<div class="grid-item" id="content_2">').appendTo('#right_content');
+			//페이지네이션 안 된다..
+			$.getJSON($.ctx()+'/phones/'+x.s+'/grid/'+x.p,d=>{
+				let a = [1,2,3];
+				let b=0;
+				$('<div id="grid"></div>').appendTo('#right_content');
+				$('<div class="row progrid"></div>').appendTo('#grid');
+				$.each(a,(x,y)=>{
+					$('<div class="col-md-4">'
+					+'<div class="thumbnail">'
+					+'<a href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRanydDprvV35nlbHP2RwvjdyPrYgOgjevy7W_efJ2tTEVZvKKF" target="_blank">'
+					+'<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRanydDprvV35nlbHP2RwvjdyPrYgOgjevy7W_efJ2tTEVZvKKF" alt="Lights" style="width:100%">'
+					+'<div class="caption">'
+					+'<p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>'
+					+'</div>'
+					+'</a>'
+					+'</div>'
+					+'</div>').appendTo('.progrid');
+				});
+				if(d.pxy.existPrev){
+					$('<li><a>&laquo;</a></li>')
+					/*.attr('href',_+'/phones/page/'+d.pxy.prevBlock)*/
+					.appendTo('.pagination')
+					.click(()=>{
+						let val = {s:x.s, p:d.pxy.prevBlock};
+						srch(val);
+					});
+				}
+				let i=0;
+				for(i=d.pxy.startPage;i<=d.pxy.endPage;i++){
+					if(d.pxy.pageNum == i){
+						$('<li><a class ="page active">'+i+'</a></li>')
+						/*.attr('href',_+'/phones/page/'+i)*/
+						.appendTo('.pagination')
+						.click(function(){
+							alert('클릭 페이지::'+$(this).text());
+							let val = {s:x.s, p:$(this).text()};
+							srch($(this).text());
+						});
+					}else{
+						$('<li><a class ="page">'+i+'</a></li>')
+						/*.attr('href',_+'/customers/page/'+i)*/
+						.appendTo('.pagination')
+						.click(function(){
+							let val = {s:x.s, p:$(this).text()};
+							srch(val);
+						});
+					}
+				}
+				if(d.pxy.existNext){
+					$('<li><a>&raquo;</a></li>')
+					/*.attr('href',_+'/phones/page/'+d.pxy.nextBlock)*/
+					.appendTo('.pagination')
+					.click(()=>{
+						let val = {s:x.s, p:d.pxy.existNext};
+						srch(d.pxy.nextBlock);
+					});
+				}
+			//
+			});
+			
+			$('#list_btn').click(e=>{
+				alert('리스트 보기 클릭');
+				srch(x);
+			});
 	};
 	return {init:init,list:list}
 })();
