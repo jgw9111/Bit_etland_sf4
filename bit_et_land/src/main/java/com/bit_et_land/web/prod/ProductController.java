@@ -80,18 +80,51 @@ public class ProductController {
 		return map;
 	}
 	
-	@GetMapping("/phones/search/{search}")
-	public Map<?,?> select(@PathVariable String search) {
+	@GetMapping("/phones/{search}/{page}")
+	public Map<?,?> select(@PathVariable("search") String search,@PathVariable("page") String page) {
 		logger.info("============ search ============");
 		String srch = "%"+search+"%";
-		
-		IFunction i = (Object o)-> prdmap.selectProducts(srch);
-		
-		List<?> list = (List<?>) i.apply(srch);
-		System.out.println(list.toString());
+		/*Mapper.java => String srch = "%"+search+"%";\
+		 *Mapper.xml => '%${search}%' 두 개가 같은 의미임
+		 * */
+		map.clear();
+		map.put("srch",srch);
+		map.put("page_num",page);
+		map.put("page_size","5");
+		map.put("block_size","5");
+		System.out.println("====search===="+srch+"\n ===page==="+page);
+		IFunction f = (Object o)-> prdmap.countSearchProducts(srch);
+		map.put("row_count", f.apply(srch));
+		System.out.println("로우넘 :::::"+f.apply(srch));
+		pxy.carryOut(map);
+		IFunction f1 = (Object o) -> prdmap.selectProducts(pxy);
+		List<?> list = (List<?>) f1.apply(pxy);
 		map.clear();
 		map.put("list",list);
 		map.put("pxy",pxy);
+		System.out.println("리스트 보기"+list.toString());
+		return map;
+	}
+
+	@GetMapping("/phones/{search}/grid/{page}")
+	public Map<?,?> grid(@PathVariable("search") String search,@PathVariable("page") String page) {
+		logger.info("============ grid ============");
+		String srch = "%"+search+"%";
+		map.clear();
+		map.put("srch",srch);
+		map.put("page_num",page);
+		map.put("page_size",9);
+		map.put("block_size","5");
+		System.out.println("====search===="+srch+"\n ===page==="+page);
+		IFunction f = (Object o)-> prdmap.countSearchProducts(srch);
+		map.put("row_count", f.apply(srch));
+		pxy.carryOut(map);
+		IFunction f1 = (Object o) -> prdmap.selectProducts(pxy);
+		List<?> list = (List<?>) f1.apply(pxy);
+		map.clear();
+		map.put("list",list);
+		map.put("pxy",pxy);
+		System.out.println("리스트 보기"+list.toString());
 		return map;
 	}
 	

@@ -68,6 +68,7 @@ auth = (()=>{
 					};
 				});
 				$('[name=login]').addClass('active');
+				$('#srch_grp').hide();
 			});
 			
 			
@@ -91,6 +92,7 @@ auth = (()=>{
 						alert('로그인 성공 '+d.customerID);
 				/*		$(r_cnt).html(compo.cust_my_page());*/
 						cust.init(d);
+						
 					}else{
 						alert('로그인 실패');
 					};

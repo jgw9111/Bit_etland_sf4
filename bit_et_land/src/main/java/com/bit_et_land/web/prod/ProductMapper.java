@@ -13,9 +13,10 @@ import com.bit_et_land.web.emp.Employee;
 public interface ProductMapper {
 	public Product insertProduct(Product prod);
 	public List<Product> selectProductList(Proxy pxy);
-	public List<Product> selectProducts(String search);
+	public List<?> selectProducts(Proxy pxy);
 	public Employee selectProduct(Product prod);
 	public int countProducts(Map<?,?> map);
+	public int countSearchProducts(String search);
 	public int countAllProducts();
 	public boolean exsitProduct(Product prod);
 	public void updateProduct(Product prod);

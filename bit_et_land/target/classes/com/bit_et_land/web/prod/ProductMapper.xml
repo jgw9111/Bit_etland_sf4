@@ -12,30 +12,6 @@
   <result property="price" column="PRICE"/>
   <result property="rownum" column="ROWNUM"/>
 </resultMap>
-	<select id="selectProductList" resultMap="result"
-	 parameterType="com.bit_et_land.web.cmm.Proxy">
-		SELECT @ROWNUM:=@ROWNUM+1 AS rownum,P.*
-		FROM PRODUCTS P,(SELECT @ROWNUM:=0)TMP 
-		ORDER BY rownum DESC
-		LIMIT #{startRow}, #{pageSize}
-	</select>
-	<select id="countAllProducts" resultType="int">
-	 	SELECT COUNT(*) FROM PRODUCTS
-	</select>
-  	<select id="selectProducts" resultType="com.bit_et_land.web.prod.Product">
-  		SELECT PRODUCT_NAME, PRICE, UNIT, SUPPLIER_NAME,CATEGORY_NAME
-        FROM PRODUCTS P
-            JOIN CATEGORIES C
-            ON C.CATEGORY_ID LIKE P.CATEGORY_ID
-            JOIN SUPPLIERS S
-            ON S.SUPPLIER_ID LIKE P.SUPPLIER_ID
-        WHERE
-        P.PRODUCT_NAME LIKE #{search}
-        OR S.SUPPLIER_NAME LIKE #{search}
-        OR C.CATEGORY_NAME LIKE #{search}
-        OR P.PRICE LIKE #{search}
-        OR P.UNIT LIKE #{search}
-  	</select>
 	<insert 
 	 	 	id="insertProduct"
 	 	 	parameterType="com.bit_et_land.web.prod.Product"
@@ -56,6 +32,58 @@
 				        OR P.UNIT LIKE #{search}
 		        )
   	</insert>
+  	
+	<select id="selectProductList" resultMap="result"
+	 parameterType="com.bit_et_land.web.cmm.Proxy">
+		SELECT @ROWNUM:=@ROWNUM+1 AS rownum,P.*
+		FROM PRODUCTS P,(SELECT @ROWNUM:=0)TMP 
+		ORDER BY rownum DESC
+		LIMIT #{startRow}, #{pageSize}
+	</select>
+	
+	<select id="countAllProducts" resultType="int">
+	 	SELECT COUNT(*) FROM PRODUCTS
+	</select>
+  	
+  	<select id="selectProducts" resultMap="result"
+  	parameterType="com.bit_et_land.web.cmm.Proxy">
+  			SELECT @ROWNUM:=@ROWNUM+1 AS rownum,
+			PRODUCT_NAME productName, 
+			PRICE price, 
+			UNIT unit, 
+			SUPPLIER_NAME supplierId,
+			CATEGORY_NAME categoryId 
+			FROM PRODUCTS P
+				JOIN CATEGORIES C
+				ON C.CATEGORY_ID LIKE P.CATEGORY_ID
+				JOIN SUPPLIERS S
+				ON S.SUPPLIER_ID LIKE P.SUPPLIER_ID
+			WHERE 
+			P.PRODUCT_NAME LIKE #{search}
+			OR S.SUPPLIER_NAME LIKE #{search}
+			OR C.CATEGORY_NAME LIKE #{search}
+			OR P.PRICE LIKE #{search}
+			OR P.UNIT LIKE #{search}
+			ORDER BY rownum DESC 
+			LIMIT #{startRow}, #{pageSize}
+  	</select>
+	
+	<select id="countSearchProducts" resultType="int">
+  			SELECT COUNT(*)
+			FROM PRODUCTS P
+				JOIN CATEGORIES C
+				ON C.CATEGORY_ID LIKE P.CATEGORY_ID
+				JOIN SUPPLIERS S
+				ON S.SUPPLIER_ID LIKE P.SUPPLIER_ID
+			WHERE 
+			P.PRODUCT_NAME LIKE #{search}
+			OR S.SUPPLIER_NAME LIKE #{search}
+			OR C.CATEGORY_NAME LIKE #{search}
+			OR P.PRICE LIKE #{search}
+			OR P.UNIT LIKE #{search}
 
+  	</select>
+	
+	
 
 </mapper>

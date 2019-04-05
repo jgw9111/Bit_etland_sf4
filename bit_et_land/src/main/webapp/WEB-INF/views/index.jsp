@@ -50,7 +50,7 @@
         <li><a href="#section3">Family</a></li>
         <li><a href="#section3">Photos</a></li> <!-- 로그인, 회원가입, 사원등록, 사원접속 -->
       </ul><br>
-      <div class="input-group">
+      <div id="srch_grp" class="input-group">
         <input type="text" class="form-control" id="searchbox" placeholder="상품 검색..">
         <span class="input-group-btn">
           <button class="btn btn-default" id="srch_btn" type="button">

@@ -34,8 +34,9 @@ cust = (()=>{
 				if($.fn.nullChecker([search])){
 					alert('검색어를 입력하세요'+search);
 				}else{
-					alert('엥'+search);
-					srch(search);
+					let val = {s:search,p:1};
+					alert('검색어 ::'+val);
+					srch(val);
 				};
 			});
 			$(l_cnt+' ul.nav').empty();
@@ -66,6 +67,7 @@ cust = (()=>{
 				});
 			});
 			$('[name=mypage]').addClass('active');
+			$('#srch_grp').show();
 		})
 	};
 	let list=x=>{
@@ -155,9 +157,10 @@ cust = (()=>{
 	};
 	
 	let srch=x=>{
-		$.getJSON(_+'/phones/search/'+x,d=>{
+		$.getJSON(_+'/phones/'+x.s+'/'+x.p,d=>{
 			$('#right_content').empty();
-			$('<div class="grid-item" id="prod_lst">'+'<h2>상품 검색 리스트</h2></div>'
+			$('<div class="grid-item" id="srch_lst">'+'<h2>상품 검색 리스트</h2></div>'
+					+'<button id="grid_btn">그리드로 보기</button>'
 					+'<div class="grid-item" id="content_2">').appendTo('#right_content');
 			let table =
 					'<table class="table table-bordered"><tr>'
@@ -178,6 +181,76 @@ cust = (()=>{
 				+'</tr>'
 			});
 			table += '</table></div>';
+			$(table).appendTo('#content_2');
+			$('<div style="height: 50px"></div>').appendTo('#srch_lst');
+			$('<div class="pagination"></div>').appendTo('#content_2');
+			
+			if(d.pxy.existPrev){
+				$('<li><a>&laquo;</a></li>')
+				/*.attr('href',_+'/phones/page/'+d.pxy.prevBlock)*/
+				.appendTo('.pagination')
+				.click(()=>{
+					let val = {s:x.s, p:d.pxy.prevBlock};
+					srch(val);
+				});
+			}
+			let i=0;
+			for(i=d.pxy.startPage;i<=d.pxy.endPage;i++){
+				if(d.pxy.pageNum == i){
+					$('<li><a class ="page active">'+i+'</a></li>')
+					/*.attr('href',_+'/phones/page/'+i)*/
+					.appendTo('.pagination')
+					.click(function(){
+						alert('클릭 페이지::'+$(this).text());
+						let val = {s:x.s, p:$(this).text()};
+						srch($(this).text());
+					});
+				}else{
+					$('<li><a class ="page">'+i+'</a></li>')
+					/*.attr('href',_+'/customers/page/'+i)*/
+					.appendTo('.pagination')
+					.click(function(){
+						let val = {s:x.s, p:$(this).text()};
+						srch(val);
+					});
+				}
+			}
+			if(d.pxy.existNext){
+				$('<li><a>&raquo;</a></li>')
+				/*.attr('href',_+'/phones/page/'+d.pxy.nextBlock)*/
+				.appendTo('.pagination')
+				.click(()=>{
+					let val = {s:x.s, p:d.pxy.existNext};
+					srch(d.pxy.nextBlock);
+				});
+			}
+			$('#grid_btn').click(e=>{
+				alert('그리드 보기 클릭');
+				let url=_+'/phones/'+x.s+'/grid/'+x.p;
+				$.getJSON(url,d=>{
+					let a = [1,2,3]
+					let i=0;
+					$('<div id="grid"/>').appendTo(r_cnt);
+					for(i=0;i<3;i++){
+						$('<div class="row progrid">'
+								+'</div>').appendTo('#grid');
+						$.each(a,(x,y)=>{
+							$('<div class="col-md-4">'
+									+'<div class="thumbnail">'
+									+'<a href="/w3images/lights.jpg" target="_blank">'
+									+'<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRanydDprvV35nlbHP2RwvjdyPrYgOgjevy7W_efJ2tTEVZvKKF" alt="Lights" style="width:100%">'
+									+'<div class="caption">'
+									+'<p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>'
+									+'</div>'
+									+'</a>'
+									+'</div>'
+									+'</div>').appendTo('.progrid')
+						}) 
+						
+					}
+				});
+			});
+			
 		});
 		
 	};
