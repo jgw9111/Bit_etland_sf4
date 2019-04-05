@@ -1,6 +1,6 @@
 /*
 ========= app-cookie =======
-@AUTHOR : pakjkwan@gmail.com
+@AUTHOR : jgw911191@gmail.com
 @CREATE DATE : 2017-4-1
 @UPDATE DATE : 2017-4-1
 @DESC :
